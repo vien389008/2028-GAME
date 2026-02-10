@@ -34,7 +34,7 @@ export default function PrivacyScreen() {
         },
       ]}
     >
-      <Text style={styles.title}>{t.privacy.toUpperCase()}</Text>
+      <Text style={styles.title}>{t.privacy}</Text>
 
       {/* CONTENT */}
       <Text style={styles.text}>
@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: "bold",
     color: "#776E65",
     textAlign: "center",
-    marginBottom: 20,
+    marginBottom: 24,
   },
   text: {
     fontSize: 16,

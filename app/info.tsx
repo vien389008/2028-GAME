@@ -38,7 +38,7 @@ export default function InfoScreen() {
         },
       ]}
     >
-      <Text style={styles.title}>{t.info.toUpperCase()}</Text>
+      <Text style={styles.title}>{t.info}</Text>
 
       {/* RETURN */}
       <TouchableOpacity

@@ -27,55 +27,62 @@ export default function HowToPlayScreen() {
       style={[
         styles.container,
         {
-          paddingTop: insets.top + 24,
+          paddingTop: insets.top + 20,
           paddingBottom: insets.bottom,
         },
       ]}
     >
-      {/* HEADER */}
+      {/* ===== HEADER ===== */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={22} color="#776E65" />
+        <TouchableOpacity
+          style={styles.backBtn}
+          onPress={() => router.back()}
+          activeOpacity={0.8}
+        >
+          <Ionicons name="arrow-back" size={26} color="#776E65" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>How to Play</Text>
+
+        <Text style={styles.headerTitle}>{t.howToPlayTitle}</Text>
+
+        {/* spacer để title luôn ở giữa */}
+        <View style={{ width: 26 }} />
       </View>
 
-      {/* BOARD IMAGE */}
-
+      {/* ===== BOARD IMAGE ===== */}
       <Image
         source={require("../assets/images/board.png")}
         style={styles.boardImage}
       />
 
-      {/* SWIPE ICONS */}
+      {/* ===== SWIPE ===== */}
       <Image
         source={require("../assets/images/swipe_icons.png")}
         style={styles.swipeIcons}
       />
-      <Text style={styles.swipeText}>Swipe to move tiles</Text>
+      <Text style={styles.swipeText}>{t.howToPlayDesc1}</Text>
 
-      {/* RULE BOX */}
+      {/* ===== RULES ===== */}
       <View style={styles.ruleBox}>
-        <Text style={styles.rule}>• Swipe to move all tiles</Text>
-        <Text style={styles.rule}>• Same numbers merge into one</Text>
-        <Text style={styles.rule}>• Each merge adds score</Text>
-        <Text style={styles.rule}>• Reach 2048 to win 🎉</Text>
+        <Text style={styles.rule}>{t.howToPlayDesc2}</Text>
+        <Text style={styles.rule}>{t.howToPlayFooter}</Text>
       </View>
 
-      {/* 2048 TILE */}
+      {/* ===== 2048 TILE ===== */}
       <Image
         source={require("../assets/images/tile_2048.png")}
         style={styles.tile2048}
       />
-      <Text style={styles.winText}>You win when you reach this tile!</Text>
+      <Text style={styles.winText}>{t.win}</Text>
 
-      {/* GOT IT */}
+      {/* ===== PLAY ===== */}
       <TouchableOpacity
-        style={styles.gotItBtn}
-        activeOpacity={0.9}
+        style={[styles.button, styles.primaryButton]}
         onPress={() => router.replace("/game?size=4")}
+        activeOpacity={0.85}
       >
-        <Text style={styles.gotItText}>GOT IT!</Text>
+        <Text style={[styles.buttonText, styles.primaryText]}>
+          {t.play.toUpperCase()}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -90,55 +97,68 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 
+  /* ===== HEADER ===== */
   header: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
-    marginBottom: 10,
+    justifyContent: "space-between",
+    marginBottom: 16,
+  },
+
+  backBtn: {
+    width: 26,
+    alignItems: "flex-start",
   },
 
   headerTitle: {
-    fontSize: 22,
-    fontWeight: "800",
+    fontSize: 34,
+    fontWeight: "900",
     color: "#776E65",
+    letterSpacing: 0.5,
+    textShadowColor: "rgba(0,0,0,0.12)",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
   },
+
+  /* ===== CONTENT ===== */
   boardImage: {
     width: "100%",
-    display: "flex",
     resizeMode: "contain",
-    height: 140,
-    marginTop: 40,
+    height: 100,
+    marginTop: 20,
   },
 
   swipeIcons: {
     width: "100%",
     height: 70,
     resizeMode: "contain",
-    marginTop: 6,
+    marginTop: 8,
   },
 
   swipeText: {
     textAlign: "center",
     color: "#776E65",
     fontSize: 16,
-    marginTop: 4,
-    fontWeight: "900",
+    marginTop: 6,
+    fontWeight: "700",
+    lineHeight: 22,
   },
 
   ruleBox: {
-    marginTop: 14,
+    marginTop: 16,
     backgroundColor: "#EEE4DA",
-    borderRadius: 12,
-    padding: 14,
-    borderWidth: 4,
-    borderColor: "#e9dcc7",
+    borderRadius: 14,
+    padding: 16,
+    borderWidth: 3,
+    borderColor: "#E0D4BF",
   },
 
   rule: {
     color: "#776E65",
     fontSize: 14,
-    lineHeight: 20,
+    lineHeight: 22,
     fontWeight: "700",
+    textAlign: "center",
   },
 
   tile2048: {
@@ -158,12 +178,12 @@ const styles = StyleSheet.create({
   },
 
   gotItBtn: {
-    marginTop: 18,
+    marginTop: 20,
     backgroundColor: "#F59563",
     alignSelf: "center",
     paddingHorizontal: 60,
     paddingVertical: 14,
-    borderRadius: 30,
+    borderRadius: 32,
     elevation: 4,
   },
 
@@ -171,5 +191,33 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 18,
     fontWeight: "800",
+    letterSpacing: 0.5,
+  },
+  button: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    backgroundColor: "#EEE4DA",
+    borderRadius: 16,
+    paddingVertical: 18,
+    paddingHorizontal: 20,
+    marginTop: 20,
+  },
+
+  primaryButton: {
+    backgroundColor: "#F67C5F",
+    textAlign: "center",
+  },
+
+  buttonText: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#776E65",
+    textAlign: "center",
+    margin: "auto",
+  },
+
+  primaryText: {
+    color: "#FFF",
   },
 });

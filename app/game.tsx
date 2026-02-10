@@ -38,17 +38,42 @@ import { getBestScore, getLanguage, setBestScore } from "../utils/storage";
 const SWIPE_THRESHOLD = 50;
 const ANIM_DURATION = 140;
 
+/* ================= FONT LOGIC ================= */
+
+/**
+ * Trả về style chữ theo:
+ * - size board (4x4, 5x5, 6x6)
+ * - số chữ của value (2,3,4,5 chữ số)
+ */
+const getTileTextStyle = (value: number, boardSize: number) => {
+  const length = value.toString().length;
+
+  let fontSize = 0;
+  let letterSpacing = 0;
+
+  // Base theo board
+  if (boardSize <= 4) fontSize = 24;
+  else if (boardSize === 5) fontSize = 20;
+  else fontSize = 18; // 6x6+
+
+  // Letter spacing cho số dài
+  if (length >= 4) letterSpacing = -1;
+
+  return {
+    fontSize,
+    letterSpacing,
+  };
+};
+
 export default function GameScreen() {
   const { size } = useLocalSearchParams();
   const boardSize = Number(size) || 4;
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
-  /* ===== RESET ===== */
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [gameKey, setGameKey] = useState(0);
 
-  /* ===== I18N ===== */
   const [lang, setLang] = useState<Lang>("vi");
   const t = TEXT[lang] ?? TEXT.vi;
 
@@ -60,7 +85,6 @@ export default function GameScreen() {
     }, []),
   );
 
-  /* ===== GAME (✅ FIX RESET) ===== */
   const { tiles, score, move, gameOver, lastMerged, hasWon } = use2048(
     boardSize,
     gameKey,
@@ -69,7 +93,6 @@ export default function GameScreen() {
   const [best, setBest] = useState(0);
   const swipeLocked = useRef(false);
 
-  /* ===== SOUND ===== */
   useEffect(() => {
     loadSounds();
     return () => unloadSounds();
@@ -94,7 +117,6 @@ export default function GameScreen() {
     }
   }, [score, best]);
 
-  /* ===== GESTURE ===== */
   const onGestureEvent = (e: PanGestureHandlerGestureEvent) => {
     if (swipeLocked.current) return;
 
@@ -118,7 +140,6 @@ export default function GameScreen() {
     }
   };
 
-  /* ===== LAYOUT ===== */
   const SCREEN_WIDTH = Dimensions.get("window").width;
   const BOARD_SIZE = SCREEN_WIDTH - 32;
   const GAP = 6;
@@ -137,7 +158,6 @@ export default function GameScreen() {
         },
       ]}
     >
-      {/* HEADER */}
       <View style={styles.topRow}>
         <ScoreBox label={t.score.toUpperCase()} value={score} />
         <View style={styles.logo}>
@@ -146,23 +166,19 @@ export default function GameScreen() {
         <ScoreBox label={t.best.toUpperCase()} value={best} />
       </View>
 
-      {/* ICONS */}
       <View style={styles.iconRow}>
         <IconButton icon="home" onPress={() => router.replace("/")} />
-
         <TouchableOpacity
           style={styles.iconBtn}
           onPress={() => setShowResetConfirm(true)}
         >
-          <Ionicons name="refresh" size={22} color="#FFF" />
+          <Ionicons name="sync" size={22} color="#FFF" />
         </TouchableOpacity>
-
         <IconButton icon="settings" onPress={() => router.push("/settings")} />
       </View>
 
       <Text style={styles.subtitle}>{t.subtitle}</Text>
 
-      {/* BOARD */}
       <PanGestureHandler
         onGestureEvent={onGestureEvent}
         onHandlerStateChange={onStateChange}
@@ -205,6 +221,7 @@ export default function GameScreen() {
               gap={GAP}
               padding={PADDING}
               duration={ANIM_DURATION}
+              boardSize={boardSize}
             />
           ))}
         </View>
@@ -213,7 +230,6 @@ export default function GameScreen() {
       {gameOver && <Text style={styles.gameOver}>{t.gameOver}</Text>}
       {hasWon && !gameOver && <Text style={styles.gameWin}>{t.win}</Text>}
 
-      {/* RESET MODAL */}
       <Modal transparent visible={showResetConfirm} animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalBox}>
@@ -253,12 +269,14 @@ function AnimatedTile({
   gap,
   padding,
   duration,
+  boardSize,
 }: {
   tile: Tile;
   size: number;
   gap: number;
   padding: number;
   duration: number;
+  boardSize: number;
 }) {
   const x = useSharedValue(padding + tile.c * (size + gap));
   const y = useSharedValue(padding + tile.r * (size + gap));
@@ -306,14 +324,22 @@ function AnimatedTile({
         },
       ]}
     >
-      <Text style={[styles.tileText, tile.value >= 8 && styles.tileTextLight]}>
+      <Text
+        numberOfLines={1}
+        adjustsFontSizeToFit
+        style={[
+          styles.tileText,
+          tile.value >= 8 && styles.tileTextLight,
+          getTileTextStyle(tile.value, boardSize),
+        ]}
+      >
         {tile.value}
       </Text>
     </Animated.View>
   );
 }
 
-/* ================= UI + STYLES ================= */
+/* ================= UI ================= */
 
 function ScoreBox({ label, value }: { label: string; value: number }) {
   return (
@@ -396,9 +422,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   tileText: {
-    fontSize: 26,
     fontWeight: "bold",
     color: "#776E65",
+    textAlign: "center",
+    includeFontPadding: false,
   },
   tileTextLight: { color: "#FFF" },
   gameOver: {

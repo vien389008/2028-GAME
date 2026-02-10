@@ -68,14 +68,20 @@ export default function SettingsScreen() {
         },
       ]}
     >
-      <Text style={styles.title}>{t.settings}</Text>
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backBtn}
+          onPress={() => router.back()}
+          activeOpacity={0.8}
+        >
+          <Ionicons name="arrow-back" size={26} color="#776E65" />
+        </TouchableOpacity>
 
-      <SettingButton
-        icon="arrow-back"
-        label={t.back}
-        onPress={() => router.back()}
-        primary
-      />
+        <Text style={styles.title}>{t.settings}</Text>
+
+        {/* spacer để title luôn ở giữa */}
+        <View style={{ width: 26 }} />
+      </View>
 
       {/* SOUND */}
       <TouchableOpacity
@@ -182,12 +188,25 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
+  /* ===== HEADER ===== */
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 80,
+  },
+  backBtn: {
+    width: 26,
+    alignItems: "flex-start",
+  },
   title: {
-    fontSize: 32,
-    fontWeight: "bold",
+    fontSize: 34,
+    fontWeight: "900",
     color: "#776E65",
-    textAlign: "center",
-    marginBottom: 24,
+    letterSpacing: 0.5,
+    textShadowColor: "rgba(0,0,0,0.12)",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
   },
   button: {
     flexDirection: "row",
