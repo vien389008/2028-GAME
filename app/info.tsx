@@ -40,16 +40,6 @@ export default function InfoScreen() {
     >
       <Text style={styles.title}>{t.info}</Text>
 
-      {/* RETURN */}
-      <TouchableOpacity
-        style={[styles.button, styles.primaryButton]}
-        onPress={() => router.back()}
-        activeOpacity={0.85}
-      >
-        <Ionicons name="arrow-back" size={22} color="#FFF" />
-        <Text style={[styles.buttonText, styles.primaryText]}>{t.back}</Text>
-      </TouchableOpacity>
-
       {/* INFO BOX */}
       <View style={styles.infoBox}>
         <Text style={styles.gameTitle}>2048</Text>
@@ -64,6 +54,16 @@ export default function InfoScreen() {
           <Text style={styles.value}>Vien BV</Text>
         </View>
       </View>
+
+      {/* BACK */}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.back()}
+        activeOpacity={0.85}
+      >
+        <Ionicons name="arrow-back" size={22} color="#FFF" />
+        <Text style={styles.buttonText}>{t.back}</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -78,32 +78,32 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 32,
-    fontWeight: "bold",
+    fontSize: 34,
+    fontWeight: "900",
     color: "#776E65",
+    letterSpacing: 0.5,
+    textShadowColor: "rgba(0,0,0,0.12)",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
     textAlign: "center",
     marginBottom: 24,
   },
 
   button: {
+    marginTop: 28,
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
-    backgroundColor: "#EEE4DA",
-    borderRadius: 16,
-    paddingVertical: 18,
-    paddingHorizontal: 20,
-    marginBottom: 20,
-  },
-
-  primaryButton: {
+    justifyContent: "center",
+    gap: 10,
     backgroundColor: "#F67C5F",
+    borderRadius: 16,
+    paddingVertical: 16,
   },
 
   buttonText: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#776E65",
+    color: "#FFF",
   },
 
   primaryText: {
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#EEE4DA",
     borderRadius: 20,
     padding: 24,
+    marginBottom: 20,
   },
 
   gameTitle: {

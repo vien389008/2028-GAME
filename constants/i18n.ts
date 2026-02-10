@@ -49,7 +49,7 @@ export const TEXT: Record<Lang, any> = {
     howToPlayTitle: "Cách chơi",
     howToPlayDesc1:
       "Vuốt lên, xuống, trái hoặc phải để\ndi chuyển tất cả các ô theo hướng đó.",
-    howToPlayDesc2: "Ghép các ô có cùng giá trị\nđể nâng cấp chúng",
+    howToPlayDesc2: "Ghép các ô có cùng giá trị\nđể nâng cấp chúng.",
     howToPlayFooter: "Tiếp tục ghép các ô cho đến khi\nbạn đạt được ô 2048!",
     play: "Chơi",
 
@@ -103,7 +103,7 @@ export const TEXT: Record<Lang, any> = {
     howToPlayTitle: "How to play",
     howToPlayDesc1:
       "Swipe up, down, left, or right to\nmove all tiles in that direction.",
-    howToPlayDesc2: "Merge tiles of the same number\nto upgrade them",
+    howToPlayDesc2: "Merge tiles of the same number\nto upgrade them.",
     howToPlayFooter: "Keep merging the tiles until\nyou get the 2048 tile!",
     play: "Play",
 

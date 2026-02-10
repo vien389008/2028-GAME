@@ -26,4 +26,13 @@ export const TILE_COLORS: Record<number, string> = {
 
   // đỏ đậm nhất (đỉnh game)
   2048: "#B71C1C",
+  // 🔥 late game
+  4096: "#8E0000", // đỏ sẫm
+  8192: "#5F0000", // đỏ rất đậm
+  16384: "#2B0000", // gần đen, cực hiếm
+
+  // 🧨 ultra late game (6x6 vẫn có thể tới)
+  32768: "#1A0010", // đen pha tím
+  65536: "#120014", // tím than rất tối
+  131072: "#0B0016", // gần như đen tuyệt đối
 };

@@ -127,6 +127,7 @@ export default function GameScreen() {
     if (absX < SWIPE_THRESHOLD && absY < SWIPE_THRESHOLD) return;
 
     playSwipe();
+    // eslint-disable-next-line no-unused-expressions
     absX > absY
       ? move(translationX > 0 ? "right" : "left")
       : move(translationY > 0 ? "down" : "up");
@@ -399,7 +400,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 16,
-    marginBottom: 80,
+    marginBottom: 60,
   },
   iconBtn: { backgroundColor: "#8F7A66", padding: 12, borderRadius: 12 },
   subtitle: {
@@ -429,19 +430,33 @@ const styles = StyleSheet.create({
   },
   tileTextLight: { color: "#FFF" },
   gameOver: {
-    marginTop: 18,
-    fontSize: 22,
-    fontWeight: "bold",
+    marginTop: 22,
+    fontSize: 28,
+    fontWeight: "900",
     textAlign: "center",
-    color: "#776E65",
+    color: "#8E0000", // đỏ sẫm
+    letterSpacing: 2,
+    textTransform: "uppercase",
+
+    textShadowColor: "rgba(255,0,0,0.5)",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
   },
   gameWin: {
-    marginTop: 24,
-    fontSize: 24,
-    fontWeight: "bold",
+    marginTop: 26,
+    fontSize: 28,
+    fontWeight: "900",
     textAlign: "center",
-    color: "#28e038",
+    color: "#2ECC71", // xanh ngọc sáng hơn #28e038
+    letterSpacing: 1.5,
+    textTransform: "uppercase",
+
+    // ✨ Glow nhẹ
+    textShadowColor: "rgba(46, 204, 113, 0.6)",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 8,
   },
+
   modalOverlay: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.4)",
