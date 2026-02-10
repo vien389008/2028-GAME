@@ -373,12 +373,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 16,
+    marginBottom: 24,
   },
   iconBtn: { backgroundColor: "#8F7A66", padding: 12, borderRadius: 12 },
   subtitle: {
     textAlign: "center",
     marginVertical: 16,
     color: "#776E65",
+    marginBottom: 24,
+    fontSize: 16,
+    fontWeight: "700",
   },
   board: {
     backgroundColor: "#BBADA0",
