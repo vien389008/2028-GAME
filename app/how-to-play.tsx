@@ -1,9 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect, useRouter } from "expo-router";
 import React, { useCallback, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { TILE_COLORS } from "../constants/tileColors";
 
 import { Lang, TEXT } from "../constants/i18n";
 import { getLanguage } from "../utils/storage";
@@ -12,15 +11,13 @@ export default function HowToPlayScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
-  /* ===== I18N ===== */
-  const [lang, setLang] = useState<Lang>("vi");
-  const t = TEXT[lang] ?? TEXT.vi;
+  const [lang, setLang] = useState<Lang>("en");
+  const t = TEXT[lang] ?? TEXT.en;
 
   useFocusEffect(
     useCallback(() => {
       getLanguage().then((v) => {
         if (v === "vi" || v === "en") setLang(v);
-        else setLang("vi");
       });
     }, []),
   );
@@ -30,185 +27,149 @@ export default function HowToPlayScreen() {
       style={[
         styles.container,
         {
-          paddingTop: insets.top + 16,
+          paddingTop: insets.top + 24,
           paddingBottom: insets.bottom,
         },
       ]}
     >
       {/* HEADER */}
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backBtn}
-          onPress={() => router.back()}
-          activeOpacity={0.85}
-        >
-          <Ionicons name="arrow-back" size={16} color="#FFF" />
-          <Text style={styles.backText}>{t.back.toUpperCase()}</Text>
+        <TouchableOpacity onPress={() => router.back()}>
+          <Ionicons name="arrow-back" size={22} color="#776E65" />
         </TouchableOpacity>
-
-        <Text style={styles.title}>{t.howToPlayTitle.toUpperCase()}</Text>
+        <Text style={styles.headerTitle}>How to Play</Text>
       </View>
 
-      {/* DESCRIPTION */}
-      <Text style={styles.desc}>{t.howToPlayDesc1}</Text>
+      {/* BOARD IMAGE */}
 
-      <Text style={[styles.desc, { marginBottom: 24 }]}>
-        {t.howToPlayDesc2}
-      </Text>
+      <Image
+        source={require("../assets/images/board.png")}
+        style={styles.boardImage}
+      />
 
-      {/* EXAMPLES */}
-      <View style={styles.grid}>
-        <ExampleRow values={[2, 2, 4]} />
-        <ExampleRow values={[4, 4, 8]} />
-        <ExampleRow values={[512, 512, 1024]} />
-        <ExampleRow values={[1024, 1024, 2048]} />
+      {/* SWIPE ICONS */}
+      <Image
+        source={require("../assets/images/swipe_icons.png")}
+        style={styles.swipeIcons}
+      />
+      <Text style={styles.swipeText}>Swipe to move tiles</Text>
+
+      {/* RULE BOX */}
+      <View style={styles.ruleBox}>
+        <Text style={styles.rule}>• Swipe to move all tiles</Text>
+        <Text style={styles.rule}>• Same numbers merge into one</Text>
+        <Text style={styles.rule}>• Each merge adds score</Text>
+        <Text style={styles.rule}>• Reach 2048 to win 🎉</Text>
       </View>
 
-      <Text style={styles.footer}>{t.howToPlayFooter}</Text>
+      {/* 2048 TILE */}
+      <Image
+        source={require("../assets/images/tile_2048.png")}
+        style={styles.tile2048}
+      />
+      <Text style={styles.winText}>You win when you reach this tile!</Text>
 
-      {/* PLAY */}
+      {/* GOT IT */}
       <TouchableOpacity
-        style={styles.playBtn}
-        onPress={() => router.replace("/game?size=4")}
+        style={styles.gotItBtn}
         activeOpacity={0.9}
+        onPress={() => router.replace("/game?size=4")}
       >
-        <Text style={styles.playText}>{t.play.toUpperCase()}</Text>
+        <Text style={styles.gotItText}>GOT IT!</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
-/* ===== COMPONENTS ===== */
-
-function ExampleRow({ values }: { values: number[] }) {
-  return (
-    <View style={styles.row}>
-      {values.map((v, i) => (
-        <React.Fragment key={`${v}-${i}`}>
-          <View style={[styles.tile, { backgroundColor: TILE_COLORS[v] }]}>
-            <Text style={[styles.tileText, v >= 8 && styles.tileTextLight]}>
-              {v}
-            </Text>
-          </View>
-
-          {i < values.length - 1 && <Text style={styles.arrow}>→</Text>}
-        </React.Fragment>
-      ))}
-    </View>
-  );
-}
-
-/* ===== STYLES ===== */
+/* ================= STYLES ================= */
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#FAF8EF",
     paddingHorizontal: 20,
   },
 
   header: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 24,
+    gap: 10,
+    marginBottom: 10,
   },
 
-  backBtn: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#8F7A66",
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 20,
-    marginRight: 14,
-  },
-
-  backText: {
-    color: "#FFF",
-    fontWeight: "700",
-    marginLeft: 6,
-    fontSize: 12,
-  },
-
-  title: {
-    fontSize: 26,
+  headerTitle: {
+    fontSize: 22,
     fontWeight: "800",
-    color: "#F67C5F",
+    color: "#776E65",
+  },
+  boardImage: {
+    width: "100%",
+    display: "flex",
+    resizeMode: "contain",
+    height: 140,
+    marginTop: 40,
   },
 
-  desc: {
+  swipeIcons: {
+    width: "100%",
+    height: 70,
+    resizeMode: "contain",
+    marginTop: 6,
+  },
+
+  swipeText: {
     textAlign: "center",
     color: "#776E65",
-    lineHeight: 22,
-    fontSize: 15,
+    fontSize: 16,
+    marginTop: 4,
+    fontWeight: "900",
   },
 
-  grid: {
-    alignItems: "center",
-    gap: 18,
-    marginBottom: 24,
+  ruleBox: {
+    marginTop: 14,
+    backgroundColor: "#EEE4DA",
+    borderRadius: 12,
+    padding: 14,
+    borderWidth: 4,
+    borderColor: "#e9dcc7",
   },
 
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-
-  arrow: {
-    fontSize: 22,
-    marginHorizontal: 10,
-    color: "#F67C5F",
+  rule: {
+    color: "#776E65",
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: "700",
   },
 
-  tile: {
-    width: 72,
-    height: 72,
-    borderRadius: 18,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 4 },
+  tile2048: {
+    width: 110,
+    height: 60,
+    resizeMode: "contain",
+    alignSelf: "center",
+    marginTop: 18,
+  },
+
+  winText: {
+    textAlign: "center",
+    color: "#776E65",
+    marginTop: 6,
+    fontSize: 14,
+    fontWeight: "900",
+  },
+
+  gotItBtn: {
+    marginTop: 18,
+    backgroundColor: "#F59563",
+    alignSelf: "center",
+    paddingHorizontal: 60,
+    paddingVertical: 14,
+    borderRadius: 30,
     elevation: 4,
   },
 
-  tileText: {
-    fontSize: 22,
-    fontWeight: "800",
-    color: "#776E65",
-  },
-
-  tileTextLight: {
+  gotItText: {
     color: "#FFF",
-  },
-
-  footer: {
-    textAlign: "center",
-    marginTop: 16,
-    color: "#776E65",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-
-  playBtn: {
-    marginTop: 28,
-    alignSelf: "center",
-    backgroundColor: "#F67C5F",
-    paddingHorizontal: 64,
-    paddingVertical: 16,
-    borderRadius: 36,
-    shadowColor: "#000",
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 6,
-  },
-
-  playText: {
-    color: "#FFF",
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: "800",
-    letterSpacing: 1,
   },
 });

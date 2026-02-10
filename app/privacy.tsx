@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     color: "#776E65",
     marginBottom: 14,
     textAlign: "center",
+    fontWeight: "500",
   },
   button: {
     marginTop: 28,

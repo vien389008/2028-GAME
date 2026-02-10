@@ -33,15 +33,15 @@ export async function loadSounds() {
   await loadSoundSetting();
 
   if (!swipePlayer) {
-    swipePlayer = createAudioPlayer(require("../assets/sounds/swipe.wav"));
+    swipePlayer = createAudioPlayer(require("../assets/sounds/swipe.mp3"));
   }
 
   if (!mergePlayer) {
-    mergePlayer = createAudioPlayer(require("../assets/sounds/merge.wav"));
+    mergePlayer = createAudioPlayer(require("../assets/sounds/merge.mp3"));
   }
 
   if (!winPlayer) {
-    winPlayer = createAudioPlayer(require("../assets/sounds/win.wav"));
+    winPlayer = createAudioPlayer(require("../assets/sounds/win.mp3"));
   }
 }
 

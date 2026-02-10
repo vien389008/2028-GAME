@@ -3,33 +3,43 @@ import { useIsFocused } from "@react-navigation/native";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useSharedValue, withTiming } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useSharedValue, withTiming } from "react-native-reanimated";
 import { Lang, TEXT } from "../constants/i18n";
 import { getLanguage } from "../utils/storage";
+
 export default function HomeScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const isFocused = useIsFocused();
+
+  /* ================= ANIMATION ================= */
   const x = useSharedValue(0);
-  x.value = withTiming(100);
+
+  useEffect(() => {
+    // ✅ set animation SAU render
+    x.value = withTiming(100, { duration: 500 });
+  }, []);
+
+  /* ================= LANGUAGE ================= */
   const [lang, setLang] = useState<Lang>("vi");
 
-  // ✅ Mỗi lần screen được focus lại → load lại language
   useEffect(() => {
     if (isFocused) {
       getLanguage().then(setLang);
     }
   }, [isFocused]);
 
-  // ✅ PHÒNG THỦ – không bao giờ crash
+  // ✅ fallback an toàn
   const t = TEXT[lang] ?? TEXT.vi;
 
+  /* ================= ACTIONS ================= */
   const startGame = (size: number) => {
     router.push({ pathname: "/game", params: { size } });
   };
 
+  /* ================= UI ================= */
   return (
     <View
       style={[
