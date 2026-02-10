@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 16,
-    marginBottom: 24,
+    marginBottom: 80,
   },
   iconBtn: { backgroundColor: "#8F7A66", padding: 12, borderRadius: 12 },
   subtitle: {
