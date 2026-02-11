@@ -106,16 +106,18 @@ export default function GameScreen() {
     if (hasWon) playWin();
   }, [hasWon]);
 
+  /* ===== Load best score theo board size ===== */
   useEffect(() => {
-    getBestScore().then(setBest);
-  }, []);
+    getBestScore(boardSize).then(setBest);
+  }, [boardSize]);
 
+  /* ===== Update best score khi score thay đổi ===== */
   useEffect(() => {
     if (score > best) {
       setBest(score);
-      setBestScore(score);
+      setBestScore(boardSize, score);
     }
-  }, [score, best]);
+  }, [score]);
 
   const onGestureEvent = (e: PanGestureHandlerGestureEvent) => {
     if (swipeLocked.current) return;
