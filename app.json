@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "2048-game",
-    "slug": "2048-game",
-    "version": "1.0.5",
+    "name": "2048 Infinity",
+    "slug": "2048-infinity",
+    "version": "1.0.6",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": ["game2048"],
+    "scheme": ["infinity2048"],
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
